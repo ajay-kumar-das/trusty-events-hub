@@ -6,7 +6,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: './', // Add this line for GitHub Pages compatibility
+  base: './', // Ensure this is set for GitHub Pages compatibility
   server: {
     host: "::",
     port: 8080,
@@ -21,4 +21,16 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: true, // Enable source maps for debugging
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          react: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['@radix-ui/react-toast', '@radix-ui/react-tooltip'],
+        }
+      }
+    }
+  }
 }));
